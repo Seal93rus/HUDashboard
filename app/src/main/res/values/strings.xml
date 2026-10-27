@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">VirtualDisplay Test</string>
+
+    <string name="btn_start">Создать дисплей</string>
+    <string name="btn_stop">Освободить</string>
+    <string name="btn_pick_app">Выбрать приложение</string>
+    <string name="btn_launch_app">Запустить на дисплее</string>
+
+    <string name="status_idle">Виртуальный дисплей не создан</string>
+    <string name="status_running">Активен: id=%1$d, %2$d×%3$d, dpi=%4$d</string>
+
+    <string name="display_info">Display ID: %1$d</string>
+
+    <string name="already_running">Дисплей уже создан</string>
+    <string name="display_created">Виртуальный дисплей создан</string>
+    <string name="display_released">Виртуальный дисплей освобождён</string>
+    <string name="need_start_first">Сначала создайте виртуальный дисплей</string>
+
+    <string name="no_app_selected">Приложение не выбрано</string>
+    <string name="selected_app">Выбрано: %1$s</string>
+    <string name="pick_app_title">Выберите приложение</string>
+    <string name="launch_ok">Приложение запущено на виртуальном дисплее</string>
+    <string name="launch_fail">Не удалось запустить приложение</string>
+    <string name="no_apps_found">Установленные приложения не найдены</string>
+</resources>

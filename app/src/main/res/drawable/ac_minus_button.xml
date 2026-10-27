@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Состояние при нажатии (когда пользователь зажал кнопку) -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <!-- Здесь укажите иконку для нажатого состояния -->
+                <bitmap
+                    android:src="@drawable/minus_selected"
+                    android:gravity="fill" />
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@android:color/transparent" />
+                    <!-- Можно изменить цвет рамки при нажатии, например на белый -->
+                    <stroke android:width="5dp" android:color="#FFFFFF" />
+                    <corners android:radius="30dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Состояние по умолчанию (ваша исходная разметка) -->
+    <item>
+        <layer-list>
+            <item>
+                <bitmap
+                    android:src="@drawable/minus_normal"
+                    android:gravity="fill" />
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@android:color/transparent" />
+                    <stroke android:width="5dp" android:color="#BCB8B8" />
+                    <corners android:radius="30dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

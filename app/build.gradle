@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.seal93rus.HUdashboard'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.seal93rus.HUdashboard"
+        minSdk 27
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        // Строго форсируем Java 8 на уровне совместимости
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8" // Изменили с 11 на 1.8 для полной синхронизации с Java
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
+        }
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            all {
+                enabled = false
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+// Принудительно подкладываем framework.jar на первое место компилятору Java
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile).configureEach { task ->
+        // 1. Добавляем флаг -Xbootclasspath/p:, который заставит javac читать framework.jar ПЕРВЫМ
+        task.options.compilerArgs.add("-Xbootclasspath/p:${projectDir}/libs/framework.jar".toString())
+
+        // 2. Отключаем предупреждения о несоответствии версий байт-кода
+        task.options.compilerArgs << "-Xlint:-options"
+    }
+}
+
+// Настройка путей для Kotlin-компилятора
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += ["-Xbootclasspath/p:${projectDir}/libs/framework.jar".toString(),
+                             "-Xskip-metadata-version-check"]
+    }
+}
+
+dependencies {
+    // Основные библиотеки UI
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0' // Оставляем стабильную версию для D8
+    implementation 'androidx.fragment:fragment:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+
+    // Зависимости из Version Catalog
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+
+    // Локальный фреймворк только для компиляции
+    compileOnly files('libs/framework.jar')
+}
